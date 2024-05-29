@@ -1,0 +1,2 @@
+FLASK_APP=newpy.py
+FLASK_ENV=development
