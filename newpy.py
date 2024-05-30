@@ -19,12 +19,14 @@ def generate():
     prompt = data['prompt']
     thread = client.beta.threads.create()
     message = client.beta.threads.messages.create(thread_id=thread.id,role="user",content=prompt,)
-    run = client.beta.threads.runs.create(thread_id=thread.id, assistant_id=assistant_id)
+    run = client.beta.threads.runs.create(thread_id=thread.id,assistant_id=assistant_id)
     while run.status != "completed":
-        keep_retrieving_run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id=run.id)
+        keep_retrieving_run = client.beta.threads.runs.retrieve(thread_id=thread.id,run_id=run.id)
         print(f"Run status: {keep_retrieving_run.status}")
         if keep_retrieving_run.status == "completed":
+            print("\n")
             break
+    # Retrieve messages added by the Assistant to the thread
     all_messages = client.beta.threads.messages.list(thread_id=thread.id)
 
     response = {
